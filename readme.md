@@ -70,7 +70,7 @@ res.render('index', { title: 'Express' });
 };
 ```
 
-Crear **app_server/routes/index.js**
+Modificar en  **app_server/routes/index.js**
 ```javascript
 var ctrlMain = require('../controllers/main');
 /* GET home page. */
