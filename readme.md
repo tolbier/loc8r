@@ -16,7 +16,7 @@ sudo npm install -g express-generator
 ```
 ####Instalar Nodemon
 ```bash
-npm install -g nodemon
+sudo npm install -g nodemon
 ```
 
 
