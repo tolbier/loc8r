@@ -88,6 +88,8 @@ Guardar en **public/bootstrap/css**
 Guardar en **public/javascript**
 
 ###Enlazar Bootstrap y Jquery
+
+Modificar en  **app_server/views/layout.jade**
 ```jade
 doctype html
 html
