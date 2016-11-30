@@ -19,7 +19,10 @@ sudo npm install -g express-generator
 sudo npm install -g nodemon
 ```
 
-
+####Instalar Foreman
+```bash
+sudo gem install foreman
+```
 
 ####Verificar Versiones
 ```bash
@@ -115,3 +118,60 @@ Borrar Contenidos de hoja de estilo por defecto
 ~/loc8r$ npm start
 ```
 Visitar [Web Proyecto](http://localhost:3000)
+
+
+##Creación Proyecto Heroku
+
+Obtener Versión NPM y node
+```bash
+~/loc8r$ node --version
+~/loc8r$ npm --version
+```
+
+Cambiar versiones de engines en package.json
+```javascript
+"engines": {
+"node": "~4.2.1",
+"npm": "~2.2.0"
+}
+```
+
+Create File : ~/loc8r/Procfile
+```bash
+web: npm start
+```
+
+Chequear Heroku instalación Localmente (Foreman)
+```bash
+~/loc8r$ foreman start
+```
+Esto ejecutará el servidor en puerto localhost:5000
+
+###Loguear en Heroku
+```bash
+~/loc8r$ heroku login
+```
+Introducir email y contraseña
+
+###Crear Proyecto en Heroku
+Sólo la primera vez
+```bash
+~/loc8r$ heroku create
+```
+
+###Push Proyecto en Heroku
+con git en branch master
+```bash
+~/loc8r$ git push heroku master
+```
+
+###Asignar un Dyno Heroku al proyecto
+```bash
+~/loc8r$ heroku ps:scale web=1
+```
+
+###Ver web
+```bash
+~/loc8r$ heroku open
+```
+
