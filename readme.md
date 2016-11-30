@@ -10,3 +10,13 @@ sudo apt-get install -y nodejs
 ```bash
 sudo apt-get install -y build-essential
 ```
+####Instalar Express
+```bash
+sudo npm install -g express-generator
+```
+####Verificar Versiones
+```bash
+$ node --version
+$ npm --version
+$ express --version
+```
