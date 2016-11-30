@@ -62,7 +62,7 @@ app.set('views', path.join(__dirname, 'app_server','views'));
 
 
 ###Separar Controladores y rutas
-Crear **app_server/controllers/main.js*
+Crear **app_server/controllers/main.js**
 ```javascript
 /* GET home page */
 module.exports.index = function(req, res){
@@ -70,4 +70,9 @@ res.render('index', { title: 'Express' });
 };
 ```
 
-
+Crear **app_server/routes/index.js**
+```javascript
+var ctrlMain = require('../controllers/main');
+/* GET home page. */
+router.get('/', ctrlMain.index);
+```
