@@ -76,3 +76,9 @@ var ctrlMain = require('../controllers/main');
 /* GET home page. */
 router.get('/', ctrlMain.index);
 ```
+
+###Instalar Bootstrap
+[Descargar Bootstrap](http://getbootstrap.com)
+
+
+http://getbootstrap.com/
