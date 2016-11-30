@@ -87,4 +87,17 @@ Guardar en **public/bootstrap/css**
 [Descargar Jquery 1.12.4](https://code.jquery.com/jquery-1.12.4.min.js)
 Guardar en **public/javascript**
 
-
+###Enlazar Bootstrap y Jquery
+```jade
+doctype html
+html
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title= title
+    link(rel='stylesheet', href='/bootstrap/css/amelia.bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block content
+    script(src='/javascripts/jquery-1.12.4.min.js')
+    script(src='/bootstrap/js/bootstrap.min.js')
+```
