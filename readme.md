@@ -42,7 +42,7 @@ $ express --version
 ~/loc8r$ nodemon
 ```
 
-###Cambiar arcbol directorios
+###Cambiar árbol directorios
 ```bash
 ~/loc8r$ mkdir -p app_server/models 
 ~/loc8r$ mkdir p app_server/controllers
@@ -50,7 +50,7 @@ $ express --version
 ~/loc8r$ mv views app_server
 ```
 
-En app.js
+En **app.js**
 ```javascript
 var routes = require('./app_server/routes/index');
 var users = require('./app_server/routes/users');
@@ -60,5 +60,14 @@ var users = require('./app_server/routes/users');
 app.set('views', path.join(__dirname, 'app_server','views'));
 ```
 
+
+###Separar Controladores y rutas
+Crear **app_server/controllers/main.js*
+```javascript
+/* GET home page */
+module.exports.index = function(req, res){
+res.render('index', { title: 'Express' });
+};
+```
 
 
