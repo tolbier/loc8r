@@ -103,3 +103,15 @@ html
     script(src='/javascripts/jquery-1.12.4.min.js')
     script(src='/bootstrap/js/bootstrap.min.js')
 ```
+
+Borrar Contenidos de hoja de estilo por defecto
+```bash
+~/loc8r$ cat /dev/null > public/stylesheets/style.css
+```
+
+###Comprobar resultado en Web
+####Ejecutar NodeJS 
+```bash
+~/loc8r$ npm start
+```
+Visitar [Web Proyecto](http://localhost:3000)
