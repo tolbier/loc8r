@@ -79,6 +79,12 @@ router.get('/', ctrlMain.index);
 
 ###Instalar Bootstrap
 [Descargar Bootstrap](http://getbootstrap.com)
+Descomprimir en **public/bootstrap**
+
+[Descargar Amelia Bootstrap](https://github.com/simonholmes/amelia/blob/master/amelia.bootstrap.min.css)
+Guardar en **public/bootstrap/css**
+
+[Descargar Jquery 1.12.4](https://code.jquery.com/jquery-1.12.4.min.js)
+Guardar en **public/javascript**
 
 
-http://getbootstrap.com/
