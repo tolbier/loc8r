@@ -77,7 +77,7 @@ var ctrlMain = require('../controllers/main');
 router.get('/', ctrlMain.index);
 ```
 
-###Instalar Bootstrap
+###Instalar Bootstrap y Jquery
 [Descargar Bootstrap](http://getbootstrap.com)
 Descomprimir en **public/bootstrap**
 
