@@ -19,6 +19,18 @@ Created with [Nodeclipse](https://github.com/Nodeclipse/nodeclipse-1)
 
 Nodeclipse is free open-source project that grows with your contributions.
 #Documento NOTAS MEAN
+
+##Configuración
+Mongo CLI
+
+```bash
+heroku addons:open mongolab
+ heroku config | grep MONGODB_URI
+ heroku logs
+
+```
+mONGO Url
+
 ## Instalación Software
 ###Instalar NodeJS v6 en Ubuntu
 ####Instalar NodeJS y NPM
