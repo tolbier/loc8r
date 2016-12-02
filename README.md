@@ -44,6 +44,11 @@ sudo npm install -g nodemon
 sudo gem install foreman
 ```
 
+####Instalar Foreman
+```bash
+npm install --save mongoose
+```
+
 ####Verificar Versiones
 ```bash
 $ node --version
