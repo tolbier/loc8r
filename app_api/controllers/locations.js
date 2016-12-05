@@ -11,7 +11,7 @@ var sendJSONresponse = function(res, status, content) {
 module.exports.locationsListByDistance = function(req, res) {
   var lng = parseFloat(req.query.lng);
   var lat = parseFloat(req.query.lat);
-  var maxDistance = parseFloat(req.query.maxDistance);
+  var maxDistance = parseFloat(req.query.maxDistance)*1000;
   var point = {
     type: "Point",
     coordinates: [lng, lat]
@@ -21,7 +21,7 @@ module.exports.locationsListByDistance = function(req, res) {
     maxDistance:maxDistance,
     num: 10
   };
-  if (!lng || !lat || !maxDistance) {
+  if ((!lng && lng!==0) || (!lat && lat!==0) || ! maxDistance) {
     console.log('locationsListByDistance missing params');
     sendJSONresponse(res, 404, {
       "message": "lng, lat and maxDistance query parameters are all required"
@@ -46,7 +46,7 @@ var buildLocationList = function(req, res, results, stats) {
   var locations = [];
   results.forEach(function(doc) {
     locations.push({
-      distance: doc.dis,
+      distance: doc.dis/1000,
       name: doc.obj.name,
       address: doc.obj.address,
       rating: doc.obj.rating,
