@@ -4,7 +4,7 @@ var apiOptions = {
     server:'http://localhost:3000'
 }
 if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = "https://evening-peak-74222.herokuapp.com";
+  apiOptions.server = "https://toyos-loc8r.herokuapp.com";
 }
 
 
