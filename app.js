@@ -53,9 +53,13 @@ app.use(express.static(path.join(__dirname, 'app_client')));
 app.use('/angular', express.static(path.join(__dirname, 'node_modules', 'angular')));
 app.use('/angular/angular-route', express.static(path.join(__dirname, 'node_modules', 'angular-route')));
 
-app.use('/', routes);
+//app.use('/', routes);
 app.use('/api', routesApi);
 //app.use('/users', users);
+
+app.use(function(req, res) {
+  res.sendFile(path.join(__dirname, 'app_client', 'index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
