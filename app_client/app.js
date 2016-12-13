@@ -1,15 +1,23 @@
-(function () {
+(function() {
 
-  angular.module('loc8rApp', ['ngRoute']);
+  angular.module('loc8rApp', ['ngRoute','ngSanitize']);
 
-  function config ($routeProvider) {
+  function config($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'home/home.view.html',
         controller: 'homeCtrl',
         controllerAs: 'vm'
       })
-      .otherwise({redirectTo: '/'});
+      .when('/about', {
+        templateUrl: '/common/views/genericText.view.html',
+        controller: 'aboutCtrl',
+        controllerAs: 'vm'
+
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
   }
 
   angular
