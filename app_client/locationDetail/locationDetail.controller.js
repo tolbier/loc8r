@@ -6,9 +6,9 @@
 
 
 
-    locationDetailCtrl.$inject = ['$routeParams','loc8rData'];
+    locationDetailCtrl.$inject = ['$routeParams', '$uibModal', 'loc8rData'];
 
-    function locationDetailCtrl($routeParams,loc8rData) {
+    function locationDetailCtrl($routeParams, $uibModal, loc8rData) {
         var vm = this;
         vm.locationid = $routeParams.locationid;
         loc8rData.locationById(vm.locationid)
@@ -23,7 +23,13 @@
             .error(function(e) {
                 console.log(e);
             });
-       
+        vm.popupReviewForm = function() {
+            var uibModalInstance = $uibModal.open({
+                templateUrl: '/reviewModal/reviewModal.view.html',
+                controller: 'reviewModalCtrl as vm'
+            });
+        };
+
     }
 
 })();
