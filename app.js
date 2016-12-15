@@ -1,13 +1,19 @@
+require('dotenv').load();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-require('./app_api/models/db');
+
 
 var uglifyJs = require("uglify-js");
 var fs = require('fs');
+var passport = require('passport');
+
+
+require('./app_api/models/db');
+require('./app_api/config/passport');
 
 var routes = require('./app_server/routes/index');
 var routesApi = require('./app_api/routes/index');
@@ -25,15 +31,19 @@ var appClientFiles = [
   'app_client/home/home.controller.js',
   'app_client/locationDetail/locationDetail.controller.js',
   'app_client/reviewModal/reviewModal.controller.js',
+  'app_client/auth/register/register.controller.js',
+  'app_client/auth/login/login.controller.js',
   'app_client/about/about.controller.js',
   'app_client/common/services/geolocation.service.js',
   'app_client/common/services/loc8rData.service.js',
+  'app_client/common/services/authentication.service.js',
   'app_client/common/filters/formatDistance.filter.js',
   'app_client/common/filters/addHtmlLineBreaks.filter.js',
   'app_client/common/directives/ratingStars/ratingStars.directive.js',
   'app_client/common/directives/footerGeneric/footerGeneric.directive.js',
   'app_client/common/directives/pageHeader/pageHeader.directive.js',
-  'app_client/common/directives/navigation/navigation.directive.js'
+  'app_client/common/directives/navigation/navigation.directive.js',
+  'app_client/common/directives/navigation/navigation.controller.js',
 ];
 var uglified = uglifyJs.minify(appClientFiles, {
   compress: false
@@ -61,6 +71,7 @@ app.use('/angular', express.static(path.join(__dirname, 'node_modules', 'angular
 app.use('/angular/angular-route', express.static(path.join(__dirname, 'node_modules', 'angular-route')));
 app.use('/angular/angular-sanitize', express.static(path.join(__dirname, 'node_modules', 'angular-sanitize')));
 
+app.use(passport.initialize());
 //app.use('/', routes);
 app.use('/api', routesApi);
 //app.use('/users', users);
@@ -76,18 +87,39 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// error handlers
+// Catch unauthorised errors
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401);
+    res.json({"message" : err.name + ": " + err.message});
+  }
+});
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
 
 module.exports = app;
+
 app.listen(3000, function() {
   console.log('App listening on port 3000!');
 });
