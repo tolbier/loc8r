@@ -1,11 +1,6 @@
 var mongoose = require('mongoose');
 var Loc = mongoose.model('Location');
-
-var sendJSONresponse = function(res, status, content) {
-  res.status(status);
-  res.json(content);
-};
-
+var responseService =  require('../services/response.service');
 
 /* GET list of locations */
 module.exports.locationsListByDistance = function(req, res) {
@@ -23,7 +18,7 @@ module.exports.locationsListByDistance = function(req, res) {
   };
   if ((!lng && lng!==0) || (!lat && lat!==0) || ! maxDistance) {
     console.log('locationsListByDistance missing params');
-    sendJSONresponse(res, 404, {
+    responseService.sendJSONresponse(res, 404, {
       "message": "lng, lat and maxDistance query parameters are all required"
     });
     return;
@@ -34,10 +29,10 @@ module.exports.locationsListByDistance = function(req, res) {
     console.log('Geo stats', stats);
     if (err) {
       console.log('geoNear error:', err);
-      sendJSONresponse(res, 404, err);
+      responseService.sendJSONresponse(res, 404, err);
     } else {
       locations = buildLocationList(req, res, results, stats);
-      sendJSONresponse(res, 200, locations);
+      responseService.sendJSONresponse(res, 200, locations);
     }
   });
 };
@@ -65,21 +60,21 @@ module.exports.locationsReadOne = function(req, res) {
       .findById(req.params.locationid)
       .exec(function(err, location) {
         if (!location) {
-          sendJSONresponse(res, 404, {
+          responseService.sendJSONresponse(res, 404, {
             "message": "locationid not found"
           });
           return;
         } else if (err) {
           console.log(err);
-          sendJSONresponse(res, 404, err);
+          responseService.sendJSONresponse(res, 404, err);
           return;
         }
         console.log(location);
-        sendJSONresponse(res, 200, location);
+        responseService.sendJSONresponse(res, 200, location);
       });
   } else {
     console.log('No locationid specified');
-    sendJSONresponse(res, 404, {
+    responseService.sendJSONresponse(res, 404, {
       "message": "No locationid in request"
     });
   }
@@ -107,10 +102,10 @@ module.exports.locationsCreate = function(req, res) {
   }, function(err, location) {
     if (err) {
       console.log(err);
-      sendJSONresponse(res, 400, err);
+      responseService.sendJSONresponse(res, 400, err);
     } else {
       console.log(location);
-      sendJSONresponse(res, 201, location);
+      responseService.sendJSONresponse(res, 201, location);
     }
   });
 };
@@ -118,7 +113,7 @@ module.exports.locationsCreate = function(req, res) {
 /* PUT /api/locations/:locationid */
 module.exports.locationsUpdateOne = function(req, res) {
   if (!req.params.locationid) {
-    sendJSONresponse(res, 404, {
+    responseService.sendJSONresponse(res, 404, {
       "message": "Not found, locationid is required"
     });
     return;
@@ -129,12 +124,12 @@ module.exports.locationsUpdateOne = function(req, res) {
     .exec(
       function(err, location) {
         if (!location) {
-          sendJSONresponse(res, 404, {
+          responseService.sendJSONresponse(res, 404, {
             "message": "locationid not found"
           });
           return;
         } else if (err) {
-          sendJSONresponse(res, 400, err);
+          responseService.sendJSONresponse(res, 400, err);
           return;
         }
         location.name = req.body.name;
@@ -154,9 +149,9 @@ module.exports.locationsUpdateOne = function(req, res) {
         }];
         location.save(function(err, location) {
           if (err) {
-            sendJSONresponse(res, 404, err);
+            responseService.sendJSONresponse(res, 404, err);
           } else {
-            sendJSONresponse(res, 200, location);
+            responseService.sendJSONresponse(res, 200, location);
           }
         });
       }
@@ -173,15 +168,15 @@ module.exports.locationsDeleteOne = function(req, res) {
         function(err, location) {
           if (err) {
             console.log(err);
-            sendJSONresponse(res, 404, err);
+            responseService.sendJSONresponse(res, 404, err);
             return;
           }
           console.log("Location id " + locationid + " deleted");
-          sendJSONresponse(res, 204, null);
+          responseService.sendJSONresponse(res, 204, null);
         }
     );
   } else {
-    sendJSONresponse(res, 404, {
+    responseService.sendJSONresponse(res, 404, {
       "message": "No locationid"
     });
   }

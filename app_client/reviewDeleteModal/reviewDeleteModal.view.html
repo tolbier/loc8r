@@ -1,0 +1,30 @@
+<div class="modal-content">
+    <form id="addReview" name="addReview" role="form" class="form-horizontal" ng-submit="vm.onSubmit()">
+        <div class="modal-header">
+            <button type="button" ng-click="vm.modal.cancel()" class="close"><span
+                aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h4 id="myModalLabel" class="modal-title">Do you want to delete this review for {{ vm.reviewData.locationName }}?</h4>
+        </div>
+        <div class="modal-body">
+            
+            <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{
+                vm.formError 
+            }}</div>
+            <div class="row">
+                <div class="well well-sm review-header">
+                    <span class="rating" rating-stars rating="review.rating"></span>
+                    <span class="reviewAuthor">{{ vm.reviewData.review.author }}</span>
+                    <small class="reviewTimestamp">{{ vm.reviewData.review.createdOn  | date : 'd MMMM yyyy' }}</small>
+
+                </div>
+                <div class="col-xs-12">
+                    <p ng-bind-html="vm.reviewData.review.reviewText | addHtmlLineBreaks"></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button ng-click="vm.modal.cancel()" type="button" class="btn btn-default">Cancel</button>
+            <button type="submit" class="btn btn-primary">Delete review</button>
+        </div>
+    </form>
+</div>

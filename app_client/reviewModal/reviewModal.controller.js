@@ -22,7 +22,7 @@
                     reviewText: formData.reviewText
                 })
                 .success(function(data) {
-                    vm.modal.close(data);
+                    vm.modal.close(vm.reviewData.review._id);
                 })
                 .error(function(data) {
                     vm.formError = "Your review has not been saved, try again";

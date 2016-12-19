@@ -65,6 +65,11 @@
                                         <span class="rating" rating-stars rating="review.rating"></span>
                                         <span class="reviewAuthor">{{ review.author }}</span>
                                         <small class="reviewTimestamp">{{ review.createdOn  | date : 'd MMMM yyyy' }}</small>
+                                        <span class="reviewDelete">
+                                            <a  ng-click="vm.popupReviewDelete(review)">
+                                           <span class="glyphicon glyphicon-trash"></span> Delete</a>
+                                        </span>
+        
                                     </div>
                                     <div class="col-xs-12">
                                         <p ng-bind-html="review.reviewText | addHtmlLineBreaks"></p>

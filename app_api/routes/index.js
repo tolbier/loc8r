@@ -6,9 +6,9 @@ var auth = jwt({
     userProperty: 'payload'
 });
 
-var ctrlLocations = require('../controllers/locations');
-var ctrlReviews = require('../controllers/reviews');
-var ctrlAuth = require('../controllers/authentication');
+var ctrlLocations = require('../controllers/locations.controller');
+var ctrlReviews = require('../controllers/reviews.controller');
+var ctrlAuth = require('../controllers/authentication.controller');
 
 router.get('/locations', ctrlLocations.locationsListByDistance);
 router.post('/locations', ctrlLocations.locationsCreate);

@@ -1,14 +1,11 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var responseService =  require('../services/response.service');
 
-var sendJSONresponse = function(res, status, content) {
-    res.status(status);
-    res.json(content);
-};
 module.exports.register = function(req, res) {
     if (!req.body.name || !req.body.email || !req.body.password) {
-        sendJSONresponse(res, 400, {
+        responseService.sendJSONresponse(res, 400, {
             "message": "All fields required"
         });
         return;
@@ -17,13 +14,14 @@ module.exports.register = function(req, res) {
     user.name = req.body.name;
     user.email = req.body.email;
     user.setPassword(req.body.password);
+    user.role = 'user';
     user.save(function(err) {
         var token;
         if (err) {
-            sendJSONresponse(res, 404, err);
+            responseService.sendJSONresponse(res, 404, err);
         } else {
             token = user.generateJwt();
-            sendJSONresponse(res, 200, {
+            responseService.sendJSONresponse(res, 200, {
                 "token": token
             });
         }
@@ -32,7 +30,7 @@ module.exports.register = function(req, res) {
 
 module.exports.login = function(req, res) {
     if (!req.body.email || !req.body.password) {
-        sendJSONresponse(res, 400, {
+        responseService.sendJSONresponse(res, 400, {
             "message": "All fields required"
         });
         return;
@@ -40,16 +38,16 @@ module.exports.login = function(req, res) {
     passport.authenticate('local', function(err, user, info) {
         var token;
         if (err) {
-            sendJSONresponse(res, 404, err);
+            responseService.sendJSONresponse(res, 404, err);
             return;
         }
         if (user) {
             token = user.generateJwt();
-            sendJSONresponse(res, 200, {
+            responseService.sendJSONresponse(res, 200, {
                 "token": token
             });
         } else {
-            sendJSONresponse(res, 401, info);
+            responseService.sendJSONresponse(res, 401, info);
         }
     })(req, res);
 };

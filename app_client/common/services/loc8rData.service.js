@@ -20,10 +20,19 @@
                 }
             });
         };
+        var deleteReviewById = function(locationid, reviewid) {
+            return $http.delete('/api/locations/' + locationid + '/reviews/'+reviewid, {
+                headers: {
+                    Authorization: 'Bearer ' + authentication.getToken()
+                }
+            });
+        };
+
         return {
             locationByCoords: locationByCoords,
             locationById: locationById,
-            addReviewById: addReviewById
+            addReviewById: addReviewById,
+            deleteReviewById: deleteReviewById,
         };
     }
 })();

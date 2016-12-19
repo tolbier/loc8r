@@ -2,6 +2,11 @@ var mongoose = require('mongoose');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
+var enumRoles = {
+  values: ['user', 'admin'],
+  message: 'enumRoles validator failed for path `{PATH}` with value `{VALUE}`'
+}
+
 var userSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -13,7 +18,13 @@ var userSchema = new mongoose.Schema({
         required: true
     },
     hash: String,
-    salt: String
+    salt: String,
+    role: { 
+        type: String, 
+        enum: enumRoles,
+        required: true,
+    }
+    
 });
 
 userSchema.methods.setPassword = function(password) {
