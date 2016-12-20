@@ -42,5 +42,5 @@ process.on('SIGTERM', function() {
   });
 });
 
-require('./locations');
-require('./users');
+require('./locations.model');
+require('./users.model');

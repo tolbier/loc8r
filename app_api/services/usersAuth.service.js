@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var responseService =  require('./response.service');
 
+User.test();
 var getUser = function(req, res, callback) {
   if (req.payload && req.payload.email) {
     User

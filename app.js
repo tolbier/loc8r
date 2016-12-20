@@ -12,8 +12,8 @@ var fs = require('fs');
 var passport = require('passport');
 
 
-require('./app_api/models/db');
-require('./app_api/config/passport');
+require('./app_api/models/db.models');
+require('./app_api/config/passport.config');
 
 //var routes = require('./app_server/routes/index');
 var routesApi = require('./app_api/routes/index');
@@ -123,6 +123,6 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-app.listen(3000, function() {
-  console.log('App listening on port 3000!');
+app.listen(8080, function() {
+  console.log('App listening on port 8080!');
 });
