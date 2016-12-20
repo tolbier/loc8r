@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var responseService =  require('./response.service');
 
-module.exports.getUser = function(req, res, callback) {
+var getUser = function(req, res, callback) {
   if (req.payload && req.payload.email) {
     User
       .findOne({
@@ -28,17 +28,25 @@ module.exports.getUser = function(req, res, callback) {
     return;
   }
 };
-module.exports.getUserName = function(req, res, user,callback) {
-
+var getUserName = function(req, res, callback) {
+  getUser(req,res,function(req,res,user){  
         callback(req, res, user.name);
+  });
 };
-module.exports.isRoleAdmin = function(req, res, user,callback) {
- 
-        if (user.role != 'admin') {
-          responseService.sendJSONresponse(res, 404, {
-            "message": "User has no Admin Role"
-          });
-          return;
-        }
-        callback(req, res);
+var isRoleAdmin = function(req, res,callback) {
+  getUser(req,res,function(req,res,user){  
+      if (user.role != 'admin') {
+        responseService.sendJSONresponse(res, 404, {
+          "message": "User has no Admin Role"
+        });
+        return;
+      }
+      callback(req, res);
+  });
+}
+
+module.exports = {
+  isRoleAdmin: isRoleAdmin,
+  getUser: getUser,
+  getUserName:getUserName,
 }

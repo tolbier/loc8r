@@ -2,34 +2,32 @@ var mongoose = require('mongoose');
 var Loc = mongoose.model('Location');
 
 var responseService =  require('../services/response.service');
-var usersService =  require('../services/users.service');
+var usersAuthService =  require('../services/usersAuth.service');
 
 
 
 /* POST a new review, providing a locationid */
 /* /api/locations/:locationid/reviews */
 module.exports.reviewsCreate = function(req, res) {
-  usersService.getUser(req,res,function(req,res,user){  
-    usersService.getUserName(req, res, user,function(req, res, userName) {
-      if (req.params.locationid) {
-        Loc
-          .findById(req.params.locationid)
-          .select('reviews')
-          .exec(
-            function(err, location) {
-              if (err) {
-                responseService.sendJSONresponse(res, 400, err);
-              } else {
-                doAddReview(req, res, location, userName);
-              }
+  usersAuthService.getUserName(req, res,function(req, res, userName) {
+    if (req.params.locationid) {
+      Loc
+        .findById(req.params.locationid)
+        .select('reviews')
+        .exec(
+          function(err, location) {
+            if (err) {
+              responseService.sendJSONresponse(res, 400, err);
+            } else {
+              doAddReview(req, res, location, userName);
             }
-          );
-      } else {
-        responseService.sendJSONresponse(res, 404, {
-          "message": "Not found, locationid required"
-        });
-      }
-    });
+          }
+        );
+    } else {
+      responseService.sendJSONresponse(res, 404, {
+        "message": "Not found, locationid required"
+      });
+    }
   });
 };
 
@@ -190,8 +188,8 @@ module.exports.reviewsReadOne = function(req, res) {
 
 // app.delete('/api/locations/:locationid/reviews/:reviewid'
 module.exports.reviewsDeleteOne = function(req, res) {
-  usersService.getUser(req,res,function(req,res,user){  
-    usersService.isRoleAdmin(req, res, user, function(req, res) {
+
+    usersAuthService.isRoleAdmin(req, res, function(req, res) {
       if (!req.params.locationid || !req.params.reviewid) {
         responseService.sendJSONresponse(res, 404, {
           "message": "Not found, locationid and reviewid are both required"
@@ -236,8 +234,6 @@ module.exports.reviewsDeleteOne = function(req, res) {
           }
         );
     });
-  });  
-  
   
   
 };
